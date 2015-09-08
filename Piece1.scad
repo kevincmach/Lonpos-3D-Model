@@ -1,28 +1,24 @@
-/*Piece 
+/* Piece 1
     OO
-     O  
-*/
+     O
+*/ 
 
-// measurements are in milimeters (mm) 
-$fn = 100; //set resolution 
+$fn = 100; //Set Resolution 
 
-sphereRadius = 5; 
-rodRadius = 1; 
-rodLength = 12; 
+sphereRadius = 5; //Sphere Center = True 
 sphereGap = 1; 
-shapeColor = "LightGray"; 
+rodLength = (sphereRadius*2) + sphereGap; //Rod Center = False 
+rodRadius = 1;
+pieceColor = "LightGrey";
 
-module piece1 (){
-//sphere1
-sphere(r= sphereRadius, center = true); 
-translate([rodLength/2,0,0]) rotate([0,90,0]) cylinder(h = rodLength, r = rodRadius, center = true);  
+module piece1() {
+//Rods 
+rotate([0,90,0]) cylinder(h=rodLength, r = rodRadius, center = false);
+translate([rodLength,0,0]) rotate([90,0,0]) cylinder(h=rodLength, r = rodRadius, center = false);
 
-//sphere2
-translate([(sphereRadius*2 + sphereGap),0,0]) sphere(r= sphereRadius, center = true);
-translate([(sphereRadius*2 + sphereGap),-sphereRadius,0]) rotate([90,0,0]) cylinder(h = rodLength, r = rodRadius, center = true); 
-
-//sphere3
-translate([(sphereRadius*2 + sphereGap),(-sphereRadius*2)-sphereGap,0])  sphere(r= sphereRadius, center = true); 
-} 
-
-color(shapeColor) piece1(); 
+//Spheres 
+sphere(r = sphereRadius, center = true); 
+translate([rodLength,0,0]) sphere(r = sphereRadius, center = true); 
+translate([rodLength, -rodLength,0]) sphere(r = sphereRadius, center = true); 
+}
+color(pieceColor) piece1(); 
