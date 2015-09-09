@@ -9,7 +9,7 @@ sphereRadius = 5; //Sphere Center = True
 sphereGap = 1; 
 rodLength = (sphereRadius*2) + sphereGap; //Rod Center = False 
 rodRadius = 1;
-pieceColor = "LightGrey";
+pieceColor = "White";
 
 module piece1() {
 //Rods 
