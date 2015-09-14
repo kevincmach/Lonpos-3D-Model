@@ -1,4 +1,8 @@
 //Lonpos Tray 
+//UL = Upper Left 
+//BL = Bottom Left 
+//UR = Upper Right 
+//BR = Bottom Right 
 
 //import all pieces here 
 
@@ -16,32 +20,72 @@ pieceColor = "LightPink";
 // tray parameters ---------------------------------
 cellHeight = sphereRadius + 1; //how tall should the tray be  
 cellSize = (sphereRadius * 2) +sphereGap; //will be a cube, distance from one end to another 
+cellPadding = sphereGap; 
 
-//cell template 
-module cellTemplate(){
+//cell templates 
+module cell(){
 difference(){
     translate([0,0,-(cellHeight/2)]) cube(size = [(cellSize),(cellSize),cellHeight], center = true);
     sphere(r= sphereRadius, center = true);  
     }
 }
-
-
-
-
-//tray module   
-module trayPiecex1(){
+module cellCenter(){     //cell template with slit for sphere connecting rod 
     difference(){
-    translate([0,0,(-trayWidth/2)]) cube([trayWidth,trayWidth,(trayWidth/2)], center = true);
-    sphere(r = sphereRadius, center = true); 
-    }
+        cell();
+        rotate([0,90,0]) cylinder(h = rodLength, r=rodRadius, center = true);
+        rotate([90,0,0]) cylinder(h = rodLength, r=rodRadius, center = true);
+    } 
+    
+}
+module cellCornerUL(){
+ difference(){ 
+  cell();    
+ translate([1,0,0]) rotate([0,90,0]) cylinder(h = rodLength - 1, r = rodRadius, center = true);  // minus one, so edge has no gap
+ translate([0,-1,0]) rotate([90,0,0]) cylinder(h = rodLength - 1, r = rodRadius, center = true);  // minus one, so edge has no gap
+ } 
+    
 }
 
-//tray column 
-
-
-
-for(numberOfRows <=5){
-    cellTemplate(); 
-    translate([0,(cellSize/2),0]); 
-    numberOfRows = numberOfRows + 1; 
+module cellCornerBL(){
+     difference(){ 
+  cell();    
+ translate([1,0,0]) rotate([0,90,0]) cylinder(h = rodLength - 1, r = rodRadius, center = true);  // minus one, so edge has no gap
+ translate([0,1,0]) rotate([90,0,0]) cylinder(h = rodLength - 1, r = rodRadius, center = true);  // minus one, so edge has no gap
+ }       
 }
+module cellCornerUR(){ 
+   difference(){ 
+  cell();    
+ translate([-1,0,0]) rotate([0,90,0]) cylinder(h = rodLength - 1, r = rodRadius, center = true);  // minus one, so edge has no gap
+ translate([0,-1,0]) rotate([90,0,0]) cylinder(h = rodLength - 1, r = rodRadius, center = true);  // minus one, so edge has no gap
+ }    
+} 
+
+module cellCornerBR(){
+     difference(){ 
+  cell();    
+ translate([-1,0,0]) rotate([0,90,0]) cylinder(h = rodLength - 1, r = rodRadius, center = true);  // minus one, so edge has no gap
+ translate([0,1,0]) rotate([90,0,0]) cylinder(h = rodLength - 1, r = rodRadius, center = true);  // minus one, so edge has no gap
+ } 
+}
+module cellEdgeTop(){
+  difference(){ 
+  cell();    
+   translate([0,-1,0]) rotate([90,0,0]) cylinder(h = rodLength, r=rodRadius, center = true);
+  rotate([0,90,0]) cylinder(h = rodLength, r = rodRadius, center = true);  // minus one, so edge has no gap
+}    
+}
+module cellEdgeBottom(){
+    
+    
+}
+
+// column template , start with origin, then add two cells on top and two cells on bottom 
+module columnTemplate(){
+
+    
+}
+cellEdgeTop(); 
+
+
+
