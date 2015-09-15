@@ -76,16 +76,26 @@ module cellEdgeTop(){
 }    
 }
 module cellEdgeBottom(){
+   difference(){ 
+  cell();    
+   translate([0,1,0]) rotate([90,0,0]) cylinder(h = rodLength, r=rodRadius, center = true);
+  rotate([0,90,0]) cylinder(h = rodLength, r = rodRadius, center = true); 
+}    
+}   
     
-    
-}
+
+
 
 // column template , start with origin, then add two cells on top and two cells on bottom 
 module columnTemplate(){
-
+translate([0,cellSize*2,0]) cellEdgeTop(); 
+translate([0,cellSize,0]) cellCenter(); 
+cellCenter(); 
+translate([0,-cellSize*2,0]) cellCenter(); 
+translate([0,-cellSize,0]) cellEdgeBottom();
     
 }
-cellEdgeTop(); 
+columnTemplate(); 
 
 
 
